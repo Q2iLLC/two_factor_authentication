@@ -60,13 +60,16 @@ module Devise
           true
         end
 
-        def send_new_otp(options = {}, contact_method = 'email')
+        def send_new_otp(options = {})
+          logger.info "send_new_otp by email"
           create_direct_otp options
-          if contact_method == 'phone'
-            send_two_factor_authentication_code_by_phone(direct_otp)
-          else
-            send_two_factor_authentication_code(direct_otp)
-          end
+          send_two_factor_authentication_code(direct_otp)
+        end
+
+        def send_new_otp_by_phone(options = {})
+          logger.info "send_new_otp by phone"
+          create_direct_otp options
+          send_two_factor_authentication_code_by_phone(direct_otp)
         end
 
         def send_new_otp_after_login?

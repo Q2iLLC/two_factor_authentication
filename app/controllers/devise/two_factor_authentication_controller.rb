@@ -18,7 +18,13 @@ class Devise::TwoFactorAuthenticationController < DeviseController
   end
 
   def resend_code
-    resource.send_new_otp(options: {}, contact_method: params[:contact_method])
+    logger.info "resend_code: #{params[:contact_method]} "
+
+    if params[:contact_method] == 'phone'
+      resource.send_new_otp_by_phone
+    else
+      resource.send_new_otp
+    end
     redirect_to send("#{resource_name}_two_factor_authentication_path"), notice: I18n.t('devise.two_factor_authentication.code_has_been_sent')
   end
 
