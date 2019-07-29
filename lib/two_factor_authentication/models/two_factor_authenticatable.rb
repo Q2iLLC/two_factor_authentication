@@ -60,9 +60,13 @@ module Devise
           true
         end
 
-        def send_new_otp(options = {})
+        def send_new_otp(options = {}, method = 'email')
           create_direct_otp options
-          send_two_factor_authentication_code(direct_otp)
+          if contact_method == 'phone'
+            send_two_factor_authentication_code_by_phone(direct_otp)
+          else
+            send_two_factor_authentication_code(direct_otp)
+          end
         end
 
         def send_new_otp_after_login?
@@ -70,6 +74,10 @@ module Devise
         end
 
         def send_two_factor_authentication_code(code)
+          raise NotImplementedError.new("No default implementation - please define in your class.")
+        end
+
+        def send_two_factor_authentication_code_by_phone(code)
           raise NotImplementedError.new("No default implementation - please define in your class.")
         end
 
