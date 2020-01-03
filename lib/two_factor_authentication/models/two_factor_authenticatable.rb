@@ -73,7 +73,7 @@ module Devise
         end
 
         def send_new_otp_after_login?
-          totp_enabled?
+          !totp_enabled?
         end
 
         def send_two_factor_authentication_code(code)
@@ -93,7 +93,7 @@ module Devise
         end
 
         def totp_enabled?
-          respond_to?(:otp_secret_key) && !otp_secret_key.nil?
+          !otp_secret_key.nil?
         end
 
         def confirm_totp_secret(secret, code, options = {})
