@@ -73,7 +73,7 @@ module Devise
         end
 
         def send_new_otp_after_login?
-          false
+          totp_enabled?
         end
 
         def send_two_factor_authentication_code(code)
