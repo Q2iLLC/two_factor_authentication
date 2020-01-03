@@ -93,7 +93,7 @@ module Devise
         end
 
         def totp_enabled?
-          true
+          respond_to?(:otp_secret_key) && !otp_secret_key.nil?
         end
 
         def confirm_totp_secret(secret, code, options = {})
